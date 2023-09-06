@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+</head>
+<body class="w3-light-grey">
+<style>
+    body, h1, h2, h3, h4, h5 {
+        font-family: "Raleway", sans-serif
+    }
+
+    #more {
+        display: none;
+    }
+
+    ul {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        list-style: none;
+    }
+</style>
+
+<div class="w3-content" style="max-width:1400px">
+
+
+    <header class="w3-container w3-center w3-padding-32">
+        <h1><b>MY BLOG</b></h1>
+        <p>Welcome to the blog of <span class="w3-tag">KanD</span></p>
+    </header>
+    <div class="w3-col m8 s12" style="margin: 16px!important;">
+        <p><a href="/add">
+            <button class="w3-button w3-padding-large w3-white w3-border"><b>Create a blog</b></button>
+        </a></p>
+    </div>
+
+    <div class="w3-col m8 s12" style="margin: 16px!important;">
+        <p><a href="/addCate">
+            <button class="w3-button w3-padding-large w3-white w3-border"><b>Create a category</b></button>
+        </a></p>
+    </div>
+
+    <div class="w3-row">
+
+        <th:block th:each="b:${blogs}">
+            <div class="w3-card-4 w3-margin w3-white">
+                <!--        <th:block th:if="${b.image}!=null">-->
+                <!--          <img th:src="@{|/upload/${b.image}|}" alt="image" style="width:100%">-->
+                <!--        </th:block>-->
+                <div class="w3-container">
+                    <h3><b th:text="${b.title}"></b></h3>
+                    <span class="w3-opacity" th:text="${b.creatAtDate}"></span>
+                </div>
+
+                <div class="w3-container">
+                    <!--          <p th:text="${b.content}"></p>-->
+                    <div class="w3-row">
+                        <div class="w3-col m8 s12">
+                            <a th:href="@{|/detail/${b.id}|}">
+                                <button class="w3-button w3-padding-large w3-white w3-border"><b>READ MORE »</b>
+                                </button>
+                            </a>
+                            <a th:href="@{|/edit/${b.id}|}">
+                                <button class="w3-button w3-padding-large w3-white w3-border"><b>Edit</b></button>
+                            </a>
+                            <a th:href="@{|/delete/${b.id}|}">
+                                <button class="w3-button w3-padding-large w3-white w3-border"><b>Delete</b></button>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </th:block>
+
+    </div>
+    <ul>
+        <li><a th:href="@{|/?page=${blogs.getNumber()-1}&size=${blogs.getSize()}&name=${name}|}"
+               th:if="${blogs.hasPrevious()}">Prev</a></li>
+        <li th:text="|${blogs.getNumber()}/${blogs.getTotalPages()}|"></li>
+        <li><a th:href="@{|/?page=${blogs.getNumber()+1}&size=${blogs.getSize()}&name=${name}|}"
+               th:if="${blogs.hasNext()}">Next</a></li>
+    </ul>
+
+</div>
+<br>
+</body>
+</html>
